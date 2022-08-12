@@ -13,3 +13,4 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 
 ### Known Issues
 - When in multiplayer, if more than one player is choosing an item, and one player chooses an item, the other players will not be able to choose an item.
+- With PowerupDrop (https://muck.thunderstore.io/package/SuperGamerTron/PowerupDrop/), dropped powerups will be dropped as if a chest was opened.
