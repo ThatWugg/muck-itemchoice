@@ -1,9 +1,6 @@
 # Item Choice
 
-Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem.
-
-
-
+Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem. 
 
 ### Notes
 
@@ -13,5 +10,5 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 
 ### Known Issues
 - When in multiplayer, if more than one player is choosing an item, and one player chooses an item, the other players will not be able to choose an item.
+- Choosing an powerup, but not actually picking an powerup, and then going to different object and choosing and picking a powerup causes the not chosen object to become the picked powerup. This is related to the issue above.
 - With PowerupDrop (https://muck.thunderstore.io/package/SuperGamerTron/PowerupDrop/), dropped powerups will be dropped as if a chest was opened.
-- In singleplayer at least, there is an occurence where you will not be able to choose your item.
