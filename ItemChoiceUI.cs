@@ -7,7 +7,6 @@ namespace ItemChoice
     public class ItemChoiceUI : MonoBehaviour
     {
         public static GameObject instance;
-        public static ItemChoiceUI actuallyTheInstance;
         public static int ItemChoiceUIID;
         public static int contentID;
         public static int targetObjID;
@@ -78,9 +77,14 @@ namespace ItemChoice
             sprite.name = powerup.id.ToString();
             sprite.transform.SetParent(((GameObject)FindObjectFromInstanceID(rowID)).GetComponent<Transform>());
             sprite.GetComponent<RawImage>().texture = powerup.sprite.texture;
-            sprite.GetComponent<Button>().onClick.AddListener(delegate { SpiritInteract.Instance.ChoseItem(powerup.id, targetObjID); });
+            sprite.GetComponent<Button>().onClick.AddListener(delegate 
+            {
+                SpiritInteract.Instance.ChoseItem(powerup.id, targetObjID);
+                ItemChoiceUI.HideUI();
+            });
             return sprite;
         }
+
 
         public static void ToggleUI()
         {

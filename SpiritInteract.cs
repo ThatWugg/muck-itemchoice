@@ -24,6 +24,13 @@ namespace ItemChoice
 
         public void Interact()
         {
+            bool hasSpiritInteract = false;
+            foreach(Transform child in ItemManager.Instance.list[parentID].GetComponent<Transform>())
+            {
+                if (!child.name.Equals("SpiritInteract")) continue;
+                hasSpiritInteract = true;
+            }
+            if (!hasSpiritInteract) return;
             var tier = ItemManager.Instance.list[parentID].GetComponent<Item>().powerup.tier;
             ItemChoiceUI.targetObjID = parentID;
             ItemChoiceUI.ShowTierInUI(tier);
@@ -53,14 +60,7 @@ namespace ItemChoice
         {
             GameObject changeObj = ItemManager.Instance.list[targetID];
             Powerup toPowerup = ItemManager.Instance.allPowerups[powerupID];
-            foreach (Transform child in changeObj.transform)
-            {
-                if (!(child.name.Equals("SpiritInteract") || child.name.Equals("PowerupParticles(Clone)"))) continue;
-                Destroy(child.gameObject);
-            }
-            ItemChoiceUI.ToggleUI();
             RemoveAndDropPowerup(toPowerup.id, changeObj.transform.position, targetID);
-            ItemChoiceUI.HideUI();
         }
 
         public void RemoveAndDropPowerup(int powerupID, Vector3 pos, int id)
