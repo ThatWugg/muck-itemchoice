@@ -7,6 +7,9 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 
 ### Notes
 
-- NOT tested in multiplayer yet and NOT tested with other mods that add powerups.
+- Tested in multiplayer to some extent and NOT tested with other mods that add powerups.
 - Possible ideas to be implemented.
 - I'm not very experienced in Unity.
+
+### Known Issues
+- When in multiplayer, if more than one player is choosing an item, and one player chooses an item, the other players will not be able to choose an item.
