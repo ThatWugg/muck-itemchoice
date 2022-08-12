@@ -9,3 +9,4 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 
 - NOT tested in multiplayer yet and NOT tested with other mods that add powerups.
 - Possible ideas to be implemented.
+- I'm not very experienced in Unity.
