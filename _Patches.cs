@@ -74,7 +74,7 @@ namespace ItemChoice
             ___readyToPickUp = false;
         }
 
-        [HarmonyPostfix]
+        [HarmonyPostfix]//Add the ItemChoiceUI to UI (1)
         [HarmonyPatch(typeof(UiController), "Awake")]
         private static void Bruh(UiController ___Instance)
         {

@@ -7,15 +7,17 @@ namespace ItemChoice
     public class ItemChoiceUI : MonoBehaviour
     {
         public static GameObject instance;
+        public static ItemChoiceUI actuallyTheInstance;
         public static int ItemChoiceUIID;
         public static int contentID;
-
+        public static int targetObjID;
+       
         public static void Init(Transform p)
         {
             instance = GameObject.Instantiate(_Assets.itemChoiceUI);
+            instance.SetActive(false);
             instance.transform.SetParent(p);
             instance.transform.localPosition = new Vector3(0, 0, 0);
-            instance.SetActive(false);
             ItemChoiceUIID = instance.GetInstanceID();
             contentID = ((GameObject)FindObjectFromInstanceID(ItemChoiceUIID)).transform.Find("VerticalScroll/VerticalViewport/VerticalContent").gameObject.GetInstanceID();
             AddPowerupsToUI(ItemManager.Instance.powerupsWhite);
@@ -76,7 +78,7 @@ namespace ItemChoice
             sprite.name = powerup.id.ToString();
             sprite.transform.SetParent(((GameObject)FindObjectFromInstanceID(rowID)).GetComponent<Transform>());
             sprite.GetComponent<RawImage>().texture = powerup.sprite.texture;
-            sprite.GetComponent<Button>().onClick.AddListener(delegate { SpiritInteract.Instance.ChoseItem(int.Parse(sprite.name)); });
+            sprite.GetComponent<Button>().onClick.AddListener(delegate { SpiritInteract.Instance.ChoseItem(powerup.id, targetObjID); });
             return sprite;
         }
 

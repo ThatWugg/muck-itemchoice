@@ -1,5 +1,5 @@
-﻿using System.Diagnostics;
-using System;
+﻿using System;
+using System.Collections.Generic;
 using UnityEngine;
 
 namespace ItemChoice
@@ -25,6 +25,7 @@ namespace ItemChoice
         public void Interact()
         {
             var tier = ItemManager.Instance.list[parentID].GetComponent<Item>().powerup.tier;
+            ItemChoiceUI.targetObjID = parentID;
             ItemChoiceUI.ShowTierInUI(tier);
             ItemChoiceUI.ToggleUI();
         }
@@ -48,9 +49,9 @@ namespace ItemChoice
 
         }
 
-        public void ChoseItem(int powerupID)
+        public void ChoseItem(int powerupID, int targetID)
         {
-            GameObject changeObj = ItemManager.Instance.list[parentID];
+            GameObject changeObj = ItemManager.Instance.list[targetID];
             Powerup toPowerup = ItemManager.Instance.allPowerups[powerupID];
             foreach (Transform child in changeObj.transform)
             {
@@ -58,7 +59,7 @@ namespace ItemChoice
                 Destroy(child.gameObject);
             }
             ItemChoiceUI.ToggleUI();
-            RemoveAndDropPowerup(toPowerup.id, changeObj.transform.position, parentID);
+            RemoveAndDropPowerup(toPowerup.id, changeObj.transform.position, targetID);
             ItemChoiceUI.HideUI();
         }
 
@@ -66,7 +67,6 @@ namespace ItemChoice
         {
             ItemManager.Instance.PickupItem(id);//Copy and pasted...
             ServerSend.PickupItem(-1, id);
-
             GameObject gameObject = GameObject.Instantiate(ItemManager.Instance.dropItem); //This is just a copy and paste from the DropPowerUpAtPosition from ItemManager...
             Powerup powerup = GameObject.Instantiate(ItemManager.Instance.allPowerups[powerupID]);
             Item component = gameObject.GetComponent<Item>();
