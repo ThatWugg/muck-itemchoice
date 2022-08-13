@@ -10,7 +10,7 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 - I'm not very experienced in Unity.
 
 ### Known Issues
-- When in multiplayer, if other players are choosing a powerup, and another player chooses a powerup while the other player have the powerup-choosing ui open, the other players will not be able to choose a powerup.
+- When in multiplayer, if other players are choosing a powerup, and another player chooses a powerup while the other player have the powerup-choosing ui open, the other players will not be able to choose a powerup (as of 1.0.1+, this may or may not be fixed).
 - With PowerupDrop (https://muck.thunderstore.io/package/SuperGamerTron/PowerupDrop/), dropped powerups will be dropped as if a chest was opened.
 
 ### Changelogs
