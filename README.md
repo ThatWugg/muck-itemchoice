@@ -3,6 +3,7 @@
 Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem. 
 
 ### Notes
+- THERES ONLY ASSETS FOR WINDOWS
 - Go to the github page for a more updated README.md
 - Tested in multiplayer to some extent and NOT tested with other mods that add powerups.
 - Possible ideas to be implemented.
