@@ -1,6 +1,6 @@
 # Item Choice
 
-Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem. When opening a chest, finishing a battle totem, or killing a boss, a powerup-choosing object will appear instead of a random powerup. Interacting with that object will allow the user to choose a powerup.
+Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem. When opening a chest, finishing a battle totem, or killing a boss, a powerup-choosing object will appear instead of a random powerup. Interacting with that object will show a UI to the user to choose a powerup.
 
 ### Notes
 - THERES ONLY ASSETS FOR WINDOWS. Other OS may see irregular assets regarding this plugin.
