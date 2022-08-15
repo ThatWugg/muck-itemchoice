@@ -7,6 +7,7 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 - Go to the github page for a more updated README.md
 - Tested in multiplayer to some extent and NOT tested with other mods that add powerups.
 - Possible ideas to be implemented.
+- I realized that I called the mod "ItemChoice" instead of "PowerupChoice". That is my mistake...
 - I'm not very experienced in Unity.
 
 ### Known Issues
