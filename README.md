@@ -18,7 +18,7 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 - Disabled scrolling hotbar when powerup-choosing UI is opened
 - Hopefully fixed dropping issue with PowerupDrop (https://muck.thunderstore.io/package/SuperGamerTron/PowerupDrop/).
 - Updated the UI a little bit so that it fits more with the Muck theme.
-- Added a config to enable or disable if the powerup-choosing object drops from chests, totems, or bosses (May have issues, but should work for the most part).
+- Added a config to enable or disable if only the powerup-choosing object drops from chests, totems, or bosses (May have issues, but should work for the most part).
 
 1.0.2:
 - Fixed an issue where if the player were to time interacting with the powerup-choosing object, they could open the UI again and rechoose a powerup.
