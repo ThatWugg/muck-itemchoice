@@ -20,8 +20,7 @@ namespace ItemChoice
         public static Material orangeSpiritMat;
         public static GameObject spiritInteract;
         public static GameObject itemChoiceUI;
-        public static GameObject rowUI;
-        public static GameObject spriteUI;
+        public static GameObject powerupHolder;
 
 
         public static void Init()
@@ -38,8 +37,7 @@ namespace ItemChoice
             spiritInteract = assetBundle.LoadAsset<GameObject>("SpiritInteract");
 
             itemChoiceUI = assetBundle.LoadAsset<GameObject>("ItemChoiceUI");
-            spriteUI = assetBundle.LoadAsset<GameObject>("Sprite");
-            rowUI = assetBundle.LoadAsset<GameObject>("Row");
+            powerupHolder = assetBundle.LoadAsset<GameObject>("PowerupHolder");
         }
     }
 

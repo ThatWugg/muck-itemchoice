@@ -6,12 +6,41 @@ using UnityEngine;
 
 namespace ItemChoice
 {
-
     [HarmonyPatch]
     public class _Patches
     {
-        //Register the white, blue, and orange spirits as powersups 
-        [HarmonyPrefix]
+
+        public static string opening = null;
+        public static float[] weight;
+
+        [HarmonyPrefix] // Identify loot drop by chest
+        [HarmonyPatch(typeof(LootContainerInteract), "ServerExecute")]
+        private static void ChestDrops(float ___white, float ___blue, float ___gold)
+        {
+            if (LocalClient.serverOwner)
+            {
+                weight = new float[] { ___white, ___blue, ___gold};
+                opening = "chest";
+            }
+        }
+
+        [HarmonyPrefix] // Identify loot drop by boss
+        [HarmonyPatch(typeof(LootExtra), "BossLoot")]
+        private static void BossDrops()
+        {
+            opening = "boss";
+            weight = new float[] { 0f, 0.8f, 0.2f};
+        }
+
+        [HarmonyPrefix] // Identify loot drop by totem
+        [HarmonyPatch(typeof(ShrineInteractable), "DropPowerup")]
+        private static void TotemDrops()
+        {
+            opening = "totem";
+            weight = new float[] { 0.3f, 0.2f, 0.1f };
+        }
+
+        [HarmonyPrefix] //Register the white, blue, and orange spirits as powersups 
         [HarmonyPatch(typeof(ItemManager), "InitAllPowerups")]
         private static void RegisterPowerups(ref Powerup[] ___powerupsWhite, ref Powerup[] ___powerupsBlue, ref Powerup[] ___powerupsOrange)
         {
@@ -29,22 +58,32 @@ namespace ItemChoice
             ItemSpirit.initSpiritID(___allPowerups);
         }
 
-
         [HarmonyPrefix] // Changes all powerups to the spirits of corresponding tiers
         [HarmonyPatch(typeof(ItemManager), "DropPowerupAtPosition")]
         public static void DropPowerupAtPosition(ref int powerupId, Dictionary<int, Powerup> ___allPowerups)
         {
-            switch (___allPowerups[powerupId].tier) {
-                case Powerup.PowerTier.White:
-                    powerupId = ItemSpirit.spiritID[0];
-                    break;
-                case Powerup.PowerTier.Blue:
-                    powerupId = ItemSpirit.spiritID[1];
-                    break;
-                case Powerup.PowerTier.Orange:
-                    powerupId = ItemSpirit.spiritID[2];
-                    break;
+            if (_Config.LetItemChoiceDrop(opening))//Config check what spirit can be dropped from
+            { 
+                switch (___allPowerups[powerupId].tier)
+                {
+                    case Powerup.PowerTier.White:
+                        powerupId = ItemSpirit.spiritID[0];
+                        break;
+                    case Powerup.PowerTier.Blue:
+                        powerupId = ItemSpirit.spiritID[1];
+                        break;
+                    case Powerup.PowerTier.Orange:
+                        powerupId = ItemSpirit.spiritID[2];
+                        break;
+                }
+            } else
+            {
+                while (ItemSpirit.isSpirit(___allPowerups[powerupId]))
+                {
+                    powerupId = ItemManager.Instance.GetRandomPowerup(weight[0], weight[1], weight[2]).id;
+                }
             }
+            opening = null;
         }
 
         [HarmonyPostfix] // Adds the SpiritInteract component to dropped spirits
@@ -81,7 +120,7 @@ namespace ItemChoice
             ItemChoiceUI.Init(___Instance.gameObject.transform);
         }
 
-        [HarmonyPrefix]
+        [HarmonyPrefix] //Count powerup-choosing UI as a UI
         [HarmonyPatch(typeof(OtherInput), "OtherUiActive")]
         public static bool ItemChoiceUIActive(ref bool __result)
         {
@@ -92,7 +131,7 @@ namespace ItemChoice
             return true;
         }
 
-        [HarmonyPrefix]
+        [HarmonyPrefix] //Close powerup-choosing UI when other UI are opened
         [HarmonyPatch(typeof(OtherInput), "Update")]
         private static bool ItemChoiceUICancel()
         {
@@ -106,7 +145,14 @@ namespace ItemChoice
             if (!(Input.GetButton("Cancel") && ItemChoiceUI.instance.activeInHierarchy)) return true;
             ItemChoiceUI.HideUI();
             return false;
+        }
 
+        [HarmonyPrefix] // Stopped hotbar scrolling
+        [HarmonyPatch(typeof(Hotbar), "Update")]
+        private static bool Update()
+        {
+            if (!ItemChoiceUI.instance.activeInHierarchy) return true;
+            return false;
         }
     }
 

@@ -1,4 +1,6 @@
 ﻿using BepInEx;
+using BepInEx.Configuration;
+using System.Collections;
 using HarmonyLib;
 using UnityEngine;
 
@@ -14,6 +16,8 @@ namespace ItemChoice
 
         private void Awake()
         {
+            _Config.Init(Config);
+
             _Assets.Init();
 
             ItemSpirit.Init();

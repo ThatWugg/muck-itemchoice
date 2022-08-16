@@ -24,67 +24,40 @@ namespace ItemChoice
             AddPowerupsToUI(ItemManager.Instance.powerupsOrange);
         }
 
-        public static void ShowTierInUI(Powerup.PowerTier tier)
-        {
-            foreach (Transform obj in ((GameObject)FindObjectFromInstanceID(contentID)).transform)
-            {
-                if (tier.ToString().Equals(obj.gameObject.name))
-                {
-                    obj.gameObject.SetActive(true);
-                    continue;
-                }
-                obj.gameObject.SetActive(false);
-            }
-        }
-
         public static void AddPowerupsToUI(Powerup[] powerUpsArray)
         {
-            Powerup[] powerupsSend = new Powerup[3];
-            for (int i = 0;i < powerUpsArray.Length; i++)
+            foreach (Powerup p in powerUpsArray)
             {
-                if (ItemSpirit.isSpirit(powerUpsArray[i])) continue;
-                powerupsSend[i % 3] = powerUpsArray[i];
-                if (powerupsSend[2] != null)
+                if (ItemSpirit.isSpirit(p)) continue;
+                GameObject holder = Instantiate(_Assets.powerupHolder);
+                GameObject sprite = holder.transform.GetChild(0).gameObject;
+                holder.SetActive(false);
+                holder.name = p.name;
+                holder.GetComponent<RectTransform>().SetParent(((GameObject)FindObjectFromInstanceID(contentID)).GetComponent<RectTransform>());
+                holder.AddComponent<PowerupInItemChoiceUI>().powerup = p;
+                sprite.GetComponent<RawImage>().texture = p.sprite.texture;
+                sprite.GetComponent<Button>().onClick.AddListener(delegate { SpriteOnClick(p.id); });
+            }
+        }
+
+        public static void ShowTierInUI(Powerup.PowerTier t)
+        {
+            foreach (Transform child in ((GameObject)FindObjectFromInstanceID(contentID)).GetComponent<RectTransform>())
+            {
+                if (!child.GetComponent<PowerupInItemChoiceUI>().powerup.tier.Equals(t))
                 {
-                    AddRow(powerupsSend, powerUpsArray[0].tier.ToString());
-                    powerupsSend = new Powerup[3];
-                }
-            }
-            if (powerupsSend[0] != null)
-            {
-                AddRow(powerupsSend, powerUpsArray[0].tier.ToString());
+                    child.gameObject.SetActive(false);
+                    continue;
+                };
+                child.gameObject.SetActive(true);
             }
         }
 
-        public static GameObject AddRow(Powerup[] powerUpsArray, string rowName)
+        public static void SpriteOnClick(int powerupID) // what happens when player clicks on item-choosing ui
         {
-            var row = GameObject.Instantiate(_Assets.rowUI);
-            row.name = rowName;
-            for (int i = 0; i < powerUpsArray.Length; i++)
-            {
-                AddSprite(row.GetInstanceID(), powerUpsArray[i]);
-            }
-            row.GetComponent<Transform>().SetParent(((GameObject)FindObjectFromInstanceID(contentID)).transform);
-            row.transform.localScale = new Vector3(1, 1, 1);
-            row.SetActive(false);
-            return row;
+            HideUI();
+            SpiritInteract.Instance.ChoseItem(powerupID, targetObjID);
         }
-
-        public static GameObject AddSprite(int rowID, Powerup powerup)
-        {
-            if (!(bool)powerup) return null;
-            var sprite = GameObject.Instantiate(_Assets.spriteUI);
-            sprite.name = powerup.id.ToString();
-            sprite.transform.SetParent(((GameObject)FindObjectFromInstanceID(rowID)).GetComponent<Transform>());
-            sprite.GetComponent<RawImage>().texture = powerup.sprite.texture;
-            sprite.GetComponent<Button>().onClick.AddListener(delegate 
-            {
-                SpiritInteract.Instance.ChoseItem(powerup.id, targetObjID);
-                ItemChoiceUI.HideUI();
-            });
-            return sprite;
-        }
-
 
         public static void ToggleUI()
         {
