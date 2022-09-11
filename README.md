@@ -3,6 +3,7 @@
 Allows the player to choose a powerup of the same tier that they opened from a chest or battle totem. When opening a chest, finishing a battle totem, or killing a boss, a powerup-choosing object will appear instead of a random powerup. Interacting with that object will show a UI to the user to choose a powerup.
 
 ### Notes
+- I forgot to add a dependency for BepInEx, so you also need BepInExPack_Muck (https://muck.thunderstore.io/package/BepInEx/BepInExPack_Muck/)
 - THERES ONLY ASSETS FOR WINDOWS. Other OS may see irregular assets regarding this plugin.
 - Go to the github page for a more updated README.md
 - Tested in multiplayer to some extent and tested with other mods that add powerups to some extent.
