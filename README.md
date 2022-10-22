@@ -13,6 +13,7 @@ Allows the player to choose a powerup of the same tier that they opened from a c
 
 ### Known Issues
 - When in multiplayer, if other players are choosing a powerup, and another player chooses a powerup while the other player have the powerup-choosing UI open, the other players will not be able to choose a powerup (as of 1.0.1+, this may or may not be fixed).
+- Version 1.1.0 does not work in multiplayer.
 
 ### Changelogs
 1.1.0:
