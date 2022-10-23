@@ -7,9 +7,9 @@ namespace ItemChoice
     public class ItemChoiceUI : MonoBehaviour
     {
         public static GameObject instance;
-        public static int ItemChoiceUIID;
-        public static int contentID;
-        public static int targetObjID;
+        public static int ItemChoiceUIID; // The UI's ID
+        public static int contentID; // The vertical content of the UI's ID
+        public static int targetObjID; 
        
         public static void Init(Transform p)
         {

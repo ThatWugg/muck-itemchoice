@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Net.Sockets;
 using UnityEngine;
 
 namespace ItemChoice
@@ -67,6 +68,7 @@ namespace ItemChoice
         {
             ItemManager.Instance.PickupItem(id);//Copy and pasted...
             ServerSend.PickupItem(-1, id);
+            // Client sided code below, this means other players will still see a spirit object when a client has picked a powerup
             GameObject gameObject = GameObject.Instantiate(ItemManager.Instance.dropItem); //This is just a copy and paste from the DropPowerUpAtPosition from ItemManager...
             Powerup powerup = GameObject.Instantiate(ItemManager.Instance.allPowerups[powerupID]);
             Item component = gameObject.GetComponent<Item>();
@@ -83,7 +85,8 @@ namespace ItemChoice
             gameObject.GetComponent<Item>().objectID = id;
             gameObject.GetComponent<Item>().pickupDelay = 0.5f;
             ItemManager.Instance.list.Add(id, gameObject);
-            ServerSend.DropPowerupAtPosition(powerupID, id, pos);
+            // Client sided code end
+            ServerSend.DropPowerupAtPosition(powerupID, id, pos); // Tells the server to drop a powerup at that spot
         }
     }
 

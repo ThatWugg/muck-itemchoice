@@ -16,8 +16,6 @@ namespace ItemChoice
 
         private void Awake()
         {
-            _Config.Init(Config);
-
             _Assets.Init();
 
             ItemSpirit.Init();
